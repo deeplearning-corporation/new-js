@@ -1,0 +1,38 @@
+// models/Product.nsj - 数据模型
+class Product {
+    constructor(db) {
+        this.db = db;
+        this.table = 'products';
+    }
+    
+    async findAll() {
+        return await this.db.query(`SELECT * FROM ${this.table}`);
+    }
+    
+    async findById(id) {
+        return await this.db.query(`SELECT * FROM ${this.table} WHERE id = ?`, [id]);
+    }
+    
+    async create(data) {
+        const { name, price, stock } = data;
+        const result = await this.db.query(
+            `INSERT INTO ${this.table} (name, price, stock) VALUES (?, ?, ?)`,
+            [name, price, stock]
+        );
+        return result.lastID;
+    }
+    
+    async update(id, data) {
+        const { name, price, stock } = data;
+        return await this.db.query(
+            `UPDATE ${this.table} SET name=?, price=?, stock=? WHERE id=?`,
+            [name, price, stock, id]
+        );
+    }
+    
+    async delete(id) {
+        return await this.db.query(`DELETE FROM ${this.table} WHERE id=?`, [id]);
+    }
+}
+
+export default Product;

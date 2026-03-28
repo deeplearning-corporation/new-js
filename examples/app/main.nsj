@@ -1,0 +1,49 @@
+// .nsj 文件示例
+const New = require('newjs');
+
+const app = new New();
+
+// 首页
+app.get('/', (req, res) => {
+    res.html(`
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>New.js 应用</title>
+            <style>
+                body {
+                    font-family: Arial;
+                    text-align: center;
+                    padding: 50px;
+                    background: linear-gradient(135deg, #667eea, #764ba2);
+                }
+                .container {
+                    background: white;
+                    border-radius: 20px;
+                    padding: 40px;
+                }
+                h1 { color: #667eea; }
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <h1>🚀 New.js with .nsj</h1>
+                <p>欢迎使用 .nsj 文件格式</p>
+                <a href="/api/hello">测试 API</a>
+            </div>
+        </body>
+        </html>
+    `);
+});
+
+// API 示例
+app.get('/api/hello', (req, res) => {
+    res.json({
+        message: 'Hello from .nsj!',
+        version: '2.0.0',
+        time: new Date().toISOString()
+    });
+});
+
+// 导出应用
+export default app;
